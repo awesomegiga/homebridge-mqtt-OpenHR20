@@ -57,6 +57,11 @@ Thermostat_hr20.prototype = {
     callback(null, this.Current_temp);
   },
 
+  getTargetTemperature: function(callback) {
+    //this.log('getTargetTemperature:', this.Target_temp);
+    callback(null, this.Target_temp);
+  },
+
   setTargetTemperature: function(callback) {
     this.log(this.name, "- MQTT : Target Temprature = ", this.Target_temp)
     this.client.publish(this.topic_TT, this.Target_temp.toString());
@@ -96,7 +101,7 @@ thermostatService
 
 thermostatService
   .getCharacteristic(Characteristic.TargetTemperature)
- // .on('get', this.getTargetTemperature.bind(this))
+  .on('get', this.getTargetTemperature.bind(this))
   .on('set', this.setTargetTemperature.bind(this));
 
 thermostatService
