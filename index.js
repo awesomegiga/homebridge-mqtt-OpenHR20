@@ -39,17 +39,10 @@ function Thermostat_hr20(log, config) {
   var Current_temp;
   var Target_temp;
 
+
   this.client  = mqtt.connect(this.url, this.options);
   var that = this;
-  this.client.subscribe(this.topic_TT);
   this.client.subscribe(this.topic_CT);
-
-
-  this.client.on('message', function (topic_TT, message) {
-  data = JSON.parse(message);
-  if (data === null) {return null}
-  that.Target_temp = parseFloat(data);
-  });
 
   this.client.on('message', function (topic_CT, message) {
   data = JSON.parse(message);
@@ -65,8 +58,9 @@ Thermostat.prototype = {
   },
 
   setTargetTemperature: function(callback) {
-    this.log(this.name, "- MQTT : Current Temprature = ", this.Target_temp)
-    callback(null, this.Target_temp);
+    this.log(this.name, "- MQTT : Target Temprature = ", this.Target_temp)
+    this.client.publish(this.topics.topic_TT, this.Target_temp.toString());
+    callback(null);
   },
 
   setTemperatureDisplayUnits: function(callback) {
