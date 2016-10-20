@@ -51,7 +51,7 @@ function Thermostat_hr20(log, config) {
   });
 }
 
-Thermostat.prototype = {
+Thermostat_hr20.prototype = {
   getCurrentTemperature: function(callback) {
     this.log(this.name, "- MQTT : Current Temprature = ", this.Current_temp)
     callback(null, this.Current_temp);
@@ -70,7 +70,7 @@ Thermostat.prototype = {
 }
 }
 
-AirQualityAccessory.prototype.getServices = function() {
+Thermostat_hr20.prototype.getServices = function() {
 
   var informationService = new Service.AccessoryInformation();
 
