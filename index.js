@@ -59,7 +59,7 @@ Thermostat_hr20.prototype = {
 
   setTargetTemperature: function(callback) {
     this.log(this.name, "- MQTT : Target Temprature = ", this.Target_temp)
-    this.client.publish(this.topics.topic_TT, this.Target_temp.toString());
+    this.client.publish(this.topic_TT, this.Target_temp.toString());
     callback(null);
   },
 
