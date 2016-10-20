@@ -44,7 +44,7 @@ function Thermostat_hr20(log, config) {
   var that = this;
   this.client.subscribe(this.topic_CT);
 
-  this.client.on('message', function (topic_CT, message) {
+  this.client.on('message', function (topic, message) {
   data = JSON.parse(message);
   if (data === null) {return null}
   that.Current_temp = parseFloat(data);
@@ -53,7 +53,7 @@ function Thermostat_hr20(log, config) {
 
 Thermostat_hr20.prototype = {
   getCurrentTemperature: function(callback) {
-    this.log(this.name, "- MQTT : Current Temprature = ", this.Current_temp)
+    this.log(this.name, "- MQTT : Current Temprature = ", this.Current_temp);
     callback(null, this.Current_temp);
   },
 
@@ -63,7 +63,7 @@ Thermostat_hr20.prototype = {
   },
 
   setTargetTemperature: function(value, callback) {
-    this.log(this.name, "- MQTT : Target Temprature = ", this.Target_temp)
+    this.log(this.name, "- MQTT : Target Temprature = ", this.Target_temp);
     this.Target_temp = value;
     this.client.publish(this.topic_TT, this.Target_temp.toString());
     callback(null);
@@ -87,12 +87,12 @@ informationService
 
 var thermostatService = new Service.Thermostat(this.name);
 
-thermostatService
-  .getCharacteristic(Characteristic.CurrentHeatingCoolingState)
+// thermostatService
+  // .getCharacteristic(Characteristic.CurrentHeatingCoolingState)
   // .on('get', this.getCurrentHeatingCoolingState.bind(this));
 
-thermostatService
-  .getCharacteristic(Characteristic.TargetHeatingCoolingState)
+// thermostatService
+  // .getCharacteristic(Characteristic.TargetHeatingCoolingState)
   // .on('get', this.getTargetHeatingCoolingState.bind(this))
   // .on('set', this.setTargetHeatingCoolingState.bind(this));
 
