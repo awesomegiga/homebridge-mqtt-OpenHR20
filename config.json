@@ -1,0 +1,10 @@
+"accessories": [
+  {
+    "accessory": "mqtt-openhr20",
+    "name": "kitchen1 HR20",
+    "url": "mqtt://localhost",
+    "topic": "openhr20_kitchen1",
+    "username": "username",
+    "password": "password",
+  }
+  ]
