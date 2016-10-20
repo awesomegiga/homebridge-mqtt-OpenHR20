@@ -62,16 +62,17 @@ Thermostat_hr20.prototype = {
     callback(null, this.Target_temp);
   },
 
-  setTargetTemperature: function(callback) {
+  setTargetTemperature: function(value, callback) {
     this.log(this.name, "- MQTT : Target Temprature = ", this.Target_temp)
+    this.Target_temp = value;
     this.client.publish(this.topic_TT, this.Target_temp.toString());
     callback(null);
   },
 
-  setTemperatureDisplayUnits: function(callback) {
+  setTemperatureDisplayUnits: function(value, callback) {
     this.log("setTemperatureDisplayUnits from %s to %s", this.temperatureDisplayUnits);
     this.temperatureDisplayUnits = value;
-    callback(null, callback);
+    callback(null);
 }
 }
 
