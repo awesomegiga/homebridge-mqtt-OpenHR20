@@ -45,9 +45,10 @@ function Thermostat_hr20(log, config) {
   this.client.subscribe(this.topic_CT);
 
   this.client.on('message', function (topic, message) {
-  data = JSON.parse(message);
-  if (data === null) {return null}
-  that.Current_temp = parseFloat(data);
+  // data = JSON.parse(message);
+  // if (data === null) {return null}
+  // that.Current_temp = parseFloat(data);
+  that.Current_temp = parseFloat(message);
   });
 }
 
