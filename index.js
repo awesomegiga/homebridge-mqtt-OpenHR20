@@ -15,6 +15,7 @@ function Thermostat_hr20(log, config) {
   this.url = config['url'];
   this.topic_CT = config['topic'] + '_CT';
   this.topic_TT = config['topic'] + '_TT';
+  this.topic_BS = config['topic'] + '_BS';
   this.client_Id 		= 'mqttjs_' + Math.random().toString(16).substr(2, 8);7
   this.options = {
     keepalive: 10,
@@ -38,17 +39,26 @@ function Thermostat_hr20(log, config) {
   this.temperatureDisplayUnits = Characteristic.TemperatureDisplayUnits.CELSIUS;
   var Current_temp;
   var Target_temp;
+  var BatteryStatus;
 
 
   this.client  = mqtt.connect(this.url, this.options);
   var that = this;
   this.client.subscribe(this.topic_CT);
+  this.client.subscribe(this.topic_BS);
 
-  this.client.on('message', function (topic, message) {
+  this.client.on('message', function (topic_CT, message) {
   // data = JSON.parse(message);
   // if (data === null) {return null}
   // that.Current_temp = parseFloat(data);
   that.Current_temp = parseFloat(message);
+  });
+
+  this.client.on('message', function (topic_BS, message) {
+  // data = JSON.parse(message);
+  // if (data === null) {return null}
+  // that.Current_temp = parseFloat(data);
+  that.BatteryStatus = parseFloat(message);
   });
 }
 
@@ -74,7 +84,12 @@ Thermostat_hr20.prototype = {
     this.log("setTemperatureDisplayUnits from %s to %s", this.temperatureDisplayUnits);
     this.temperatureDisplayUnits = value;
     callback(null);
-}
+  },
+
+  getBatteryStatus: function(callback) {
+    this.log(this.name, , "- MQTT : Battery Status = ", this.BatteryStatus);
+    callback(null, this.BatteryStatus);
+  }
 }
 
 Thermostat_hr20.prototype.getServices = function() {
@@ -110,6 +125,10 @@ thermostatService
   .getCharacteristic(Characteristic.TemperatureDisplayUnits)
 //  .on('get', this.getTemperatureDisplayUnits.bind(this))
   .on('set', this.setTemperatureDisplayUnits.bind(this));
+
+thermostatService
+  .addCharacteristic(Characteristic.StatusLowBattery)
+  .on('get', this.getBatteryStatus.bind(this));
 
   return [informationService, thermostatService];
 }
