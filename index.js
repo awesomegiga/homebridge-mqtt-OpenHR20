@@ -47,18 +47,16 @@ function Thermostat_hr20(log, config) {
   this.client.subscribe(this.topic_CT);
   this.client.subscribe(this.topic_BS);
 
-  this.client.on('message', function (topic_CT, message) {
+  this.client.on('message', function (topic, message) {
   // data = JSON.parse(message);
   // if (data === null) {return null}
   // that.Current_temp = parseFloat(data);
-  that.Current_temp = parseFloat(message);
-  });
-
-  this.client.on('message', function (topic_BS, message) {
-  // data = JSON.parse(message);
-  // if (data === null) {return null}
-  // that.Current_temp = parseFloat(data);
-  that.BatteryStatus = parseFloat(message);
+  if (topic === topic_CT ){
+    that.Current_temp = parseFloat(message);
+  }
+  elseif (topic === topic_BS ){
+    that.BatteryStatus = parseFloat(message);
+  }
   });
 }
 
