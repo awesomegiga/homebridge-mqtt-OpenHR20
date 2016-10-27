@@ -87,7 +87,7 @@ Thermostat_hr20.prototype = {
   },
 
   getBatteryStatus: function(callback) {
-    this.log(this.name, , "- MQTT : Battery Status = ", this.BatteryStatus);
+    this.log(this.name, "- MQTT : Battery Status = ", this.BatteryStatus);
     callback(null, this.BatteryStatus);
   }
 }
