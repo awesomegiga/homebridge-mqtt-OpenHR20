@@ -51,10 +51,10 @@ function Thermostat_hr20(log, config) {
   // data = JSON.parse(message);
   // if (data === null) {return null}
   // that.Current_temp = parseFloat(data);
-  if (topic === topic_CT ){
+  if (topic === topic_CT){
     that.Current_temp = parseFloat(message);
   }
-  elseif (topic === topic_BS ){
+  if (topic === topic_BS){
     that.BatteryStatus = parseFloat(message);
   }
   });
