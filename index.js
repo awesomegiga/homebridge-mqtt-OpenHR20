@@ -61,7 +61,7 @@ function Thermostat_hr20(log, config) {
   }
   if (topic === that.topic_TT){
     that.Target_temp = parseFloat(message);
-    that.setTargetTemperatureEvent();
+    that.setTargetTemperatureEvent.bind(that);
   }
   });
 }
