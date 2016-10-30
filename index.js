@@ -36,8 +36,6 @@ function Thermostat_hr20(log, config) {
     rejectUnauthorized: false
   };
 
-  var thermostatService = new Service.Thermostat(this.name);
-
   this.temperatureDisplayUnits = Characteristic.TemperatureDisplayUnits.CELSIUS;
   var Current_temp;
   var Target_temp;
@@ -106,12 +104,14 @@ Thermostat_hr20.prototype = {
 
 Thermostat_hr20.prototype.getServices = function() {
 
-  var informationService = new Service.AccessoryInformation();
+this.informationService = new Service.AccessoryInformation();
 
-informationService
+this.informationService
   .setCharacteristic(Characteristic.Manufacturer, "Honeywell Hacked")
   .setCharacteristic(Characteristic.Model, "Open HR20")
   .setCharacteristic(Characteristic.SerialNumber, "Open HR20 SN");
+
+this.thermostatService = new Service.Thermostat(this.name);
 
 // thermostatService
   // .getCharacteristic(Characteristic.CurrentHeatingCoolingState)
@@ -140,5 +140,5 @@ this.thermostatService
   .addCharacteristic(Characteristic.StatusLowBattery)
   .on('get', this.getBatteryStatus.bind(this));
 
-  return [informationService, this.thermostatService];
+  return [this.informationService, this.thermostatService];
 }
