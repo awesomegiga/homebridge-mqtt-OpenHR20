@@ -46,6 +46,8 @@ function Thermostat_hr20(log, config) {
   var that = this;
   this.client.subscribe(this.topic_CT);
   this.client.subscribe(this.topic_BS);
+  this.client.subscribe(this.topic_TT);
+
 
   this.client.on('message', function (topic, message) {
   // data = JSON.parse(message);
@@ -56,6 +58,11 @@ function Thermostat_hr20(log, config) {
   }
   if (topic === that.topic_BS){
     that.BatteryStatus = parseFloat(message);
+  }
+  if (topic === that.topic_TT){
+    that.Target_temp = parseFloat(message);
+    that.Thermostat_hr20.thermostatService.setCharacteristic(Characteristic.TargetTemperature,
+    that.Target_temp);
   }
   });
 }
