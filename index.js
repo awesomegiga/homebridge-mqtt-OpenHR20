@@ -140,5 +140,5 @@ thermostatService
   .addCharacteristic(Characteristic.StatusLowBattery)
   .on('get', this.getBatteryStatus.bind(this));
 
-  return [informationService, thermostatService];
+  return [informationService, this.thermostatService];
 }
