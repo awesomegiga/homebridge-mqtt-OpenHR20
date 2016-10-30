@@ -36,6 +36,8 @@ function Thermostat_hr20(log, config) {
     rejectUnauthorized: false
   };
 
+  var thermostatService = new Service.Thermostat(this.name);
+
   this.temperatureDisplayUnits = Characteristic.TemperatureDisplayUnits.CELSIUS;
   var Current_temp;
   var Target_temp;
@@ -110,8 +112,6 @@ informationService
   .setCharacteristic(Characteristic.Manufacturer, "Honeywell Hacked")
   .setCharacteristic(Characteristic.Model, "Open HR20")
   .setCharacteristic(Characteristic.SerialNumber, "Open HR20 SN");
-
-var thermostatService = new Service.Thermostat(this.name);
 
 // thermostatService
   // .getCharacteristic(Characteristic.CurrentHeatingCoolingState)
