@@ -122,21 +122,21 @@ informationService
   // .on('get', this.getTargetHeatingCoolingState.bind(this))
   // .on('set', this.setTargetHeatingCoolingState.bind(this));
 
-thermostatService
+this.thermostatService
   .getCharacteristic(Characteristic.CurrentTemperature)
   .on('get', this.getCurrentTemperature.bind(this));
 
-thermostatService
+this.thermostatService
   .getCharacteristic(Characteristic.TargetTemperature)
   .on('get', this.getTargetTemperature.bind(this))
   .on('set', this.setTargetTemperature.bind(this));
 
-thermostatService
+this.thermostatService
   .getCharacteristic(Characteristic.TemperatureDisplayUnits)
 //  .on('get', this.getTemperatureDisplayUnits.bind(this))
   .on('set', this.setTemperatureDisplayUnits.bind(this));
 
-thermostatService
+this.thermostatService
   .addCharacteristic(Characteristic.StatusLowBattery)
   .on('get', this.getBatteryStatus.bind(this));
 
