@@ -14,6 +14,7 @@ function Thermostat_hr20(log, config) {
   this.name = config["name"];
   this.url = config['url'];
   this.topic_CT = config['topic'] + '_CT';
+  this.topic_TT = config['topic'] + '_TT_local';
   this.topic_TT = config['topic'] + '_TT';
   this.topic_BS = config['topic'] + '_BS';
   this.client_Id 		= 'mqttjs_' + Math.random().toString(16).substr(2, 8);7
@@ -40,13 +41,14 @@ function Thermostat_hr20(log, config) {
   var Current_temp;
   var Target_temp;
   var BatteryStatus;
+  var update_req = 0;
 
 
   this.client  = mqtt.connect(this.url, this.options);
   var that = this;
   this.client.subscribe(this.topic_CT);
   this.client.subscribe(this.topic_BS);
-  this.client.subscribe(this.topic_TT);
+  this.client.subscribe(this.topic_TT_local);
 
 
   this.client.on('message', function (topic, message) {
@@ -59,10 +61,12 @@ function Thermostat_hr20(log, config) {
   if (topic === that.topic_BS){
     that.BatteryStatus = parseFloat(message);
   }
-  if (topic === that.topic_TT){
-    that.Target_temp = parseFloat(message);
-    that.setTargetTemperatureEvent.bind(that);
-  }
+  if (topic === that.topic_TT_local){
+    if (that.update_req === 0){
+      that.Target_temp = parseFloat(message);
+      that.setTargetTemperatureEvent.bind(that);
+    }
+    that.syncTargetTemp.bind(that);
   });
 }
 
@@ -80,13 +84,19 @@ Thermostat_hr20.prototype = {
   setTargetTemperature: function(value, callback) {
     this.log(this.name, "- MQTT : Target Temprature = ", this.Target_temp);
     this.Target_temp = value;
-    this.client.publish(this.topic_TT, this.Target_temp.toString());
+    this.update_req = 1;
     callback(null);
   },
 
   setTargetTemperatureEvent: function(callback) {
     this.log(this.name, "- MQTT : Target Temprature locally updated = ", this.Target_temp);
     this.thermostatService.setCharacteristic(Characteristic.TargetTemperature, this.Target_temp);
+    callback(null);
+  },
+
+  syncTargetTemp: function(callback){
+    this.client.publish(this.topic_TT, this.Target_temp.toString());
+    this.update_req = 0;
     callback(null);
   },
 
