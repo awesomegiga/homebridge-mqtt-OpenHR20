@@ -67,6 +67,7 @@ function Thermostat_hr20(log, config) {
       that.setTargetTemperatureEvent.bind(that);
     }
     that.syncTargetTemp.bind(that);
+  }
   });
 }
 
