@@ -71,7 +71,7 @@ function Thermostat_hr20(log, config) {
       that.Target_temp = that.Target_temp_local;
       this.setTargetTemperatureEvent.bind(this);
     }
-    this.syncTargetTemp.bind(this);
+    this.syncTargetTemp(this);
   }
 }.bind(this));
 }
