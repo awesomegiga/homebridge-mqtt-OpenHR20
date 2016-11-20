@@ -66,14 +66,14 @@ function Thermostat_hr20(log, config) {
   }
   if (topic === that.topic_TT_local){
     that.Target_temp_local = parseFloat(message);
-    that.log(this.name, "- MQTT : Local Tagert Temprature = ", this.Target_temp_local);
+    that.log(that.name, "- MQTT : Local Tagert Temprature = ", that.Target_temp_local);
     if (that.update_req === 0){
       that.Target_temp = that.Target_temp_local;
-      this.setTargetTemperatureEvent.bind(this);
+      that.setTargetTemperatureEvent(that);
     }
-    this.syncTargetTemp(this);
+    that.syncTargetTemp(that);
   }
-}.bind(this));
+}.bind(that));
 }
 
 Thermostat_hr20.prototype = {
@@ -94,17 +94,17 @@ Thermostat_hr20.prototype = {
     callback(null);
   },
 
-  setTargetTemperatureEvent: function(callback) {
-    this.log(this.name, "Target Temprature locally updated = ", this.Target_temp);
-    this.thermostatService.setCharacteristic(Characteristic.TargetTemperature, this.Target_temp);
-    callback(null);
+  setTargetTemperatureEvent: function(self) {
+    self.log(this.name, "Target Temprature locally updated = ", self.Target_temp);
+    self.thermostatService.setCharacteristic(Characteristic.TargetTemperature, self.Target_temp);
+    // callback(null);
   },
 
-  syncTargetTemp: function(callback){
-    this.log(this.name, "- MQTT : Sync Target Temprature with thermostat = ", this.Target_temp);
-    this.client.publish(this.topic_TT, this.Target_temp.toString());
-    this.update_req = 0;
-    callback(null);
+  syncTargetTemp: function(self){
+    self.log(this.name, "- MQTT : Sync Target Temprature with thermostat = ", self.Target_temp);
+    self.client.publish(self.topic_TT, self.Target_temp.toString());
+    self.update_req = 0;
+    // callback(null);
   },
 
   setTemperatureDisplayUnits: function(value, callback) {
