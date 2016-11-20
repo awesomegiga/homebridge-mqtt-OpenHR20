@@ -97,14 +97,14 @@ Thermostat_hr20.prototype = {
   setTargetTemperatureEvent: function(callback) {
     this.log(this.name, "Target Temprature locally updated = ", this.Target_temp);
     this.thermostatService.setCharacteristic(Characteristic.TargetTemperature, this.Target_temp);
-    callback(null);
+    // callback(null);
   },
 
   syncTargetTemp: function(callback){
     this.log(this.name, "- MQTT : Sync Target Temprature with thermostat = ", this.Target_temp);
     this.client.publish(this.topic_TT, this.Target_temp.toString());
     this.update_req = 0;
-    callback(null);
+    // callback(null);
   },
 
   setTemperatureDisplayUnits: function(value, callback) {
