@@ -58,20 +58,20 @@ function Thermostat_hr20(log, config) {
   // that.Current_temp = parseFloat(data);
   if (topic === that.topic_CT){
     that.Current_temp = parseFloat(message);
-    that.log(this.name, "- MQTT : Current Temprature = ", that.Current_temp);
+    that.log(that.name, "- MQTT : Current Temprature = ", that.Current_temp);
   }
   if (topic === that.topic_BS){
     that.BatteryStatus = parseFloat(message);
-    that.log(this.name, "- MQTT : Battery Status = ", that.BatteryStatus);
+    that.log(that.name, "- MQTT : Battery Status = ", that.BatteryStatus);
   }
   if (topic === that.topic_TT_local){
     that.Target_temp_local = parseFloat(message);
-    that.log(this.name, "- MQTT : Local Tagert Temprature = ", that.Target_temp_local);
+    that.log(that.name, "- MQTT : Local Tagert Temprature = ", that.Target_temp_local);
     if (that.update_req === 0){
       that.Target_temp = that.Target_temp_local;
-      that.setTargetTemperatureEvent;
+      that.setTargetTemperatureEvent(that);
     }
-    that.syncTargetTemp;
+    that.syncTargetTemp(that);
   }
 });
 }
