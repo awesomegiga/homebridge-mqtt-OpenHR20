@@ -69,9 +69,9 @@ function Thermostat_hr20(log, config) {
     that.log(this.name, "- MQTT : Local Tagert Temprature = ", that.Target_temp_local);
     if (that.update_req === 0){
       that.Target_temp = that.Target_temp_local;
-      that.setTargetTemperatureEvent(that);
+      that.setTargetTemperatureEvent.bind(that);
     }
-    that.syncTargetTemp(that);
+    that.syncTargetTemp.bind(that);
   }
 }.bind(that));
 }
