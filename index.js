@@ -57,9 +57,11 @@ function Thermostat_hr20(log, config) {
   // that.Current_temp = parseFloat(data);
   if (topic === that.topic_CT){
     that.Current_temp = parseFloat(message);
+    that.log(this.name, "- MQTT : Current Temprature = ", this.Current_temp);
   }
   if (topic === that.topic_BS){
     that.BatteryStatus = parseFloat(message);
+    that.log(this.name, "- MQTT : Battery Status = ", this.BatteryStatus);
   }
   if (topic === that.topic_TT_local){
     if (that.update_req === 0){
@@ -78,12 +80,12 @@ Thermostat_hr20.prototype = {
   },
 
   getTargetTemperature: function(callback) {
-    //this.log('getTargetTemperature:', this.Target_temp);
+    this.log('getTargetTemperature:', this.Target_temp);
     callback(null, this.Target_temp);
   },
 
   setTargetTemperature: function(value, callback) {
-    this.log(this.name, "- MQTT : Target Temprature = ", this.Target_temp);
+    this.log(this.name, "Target Temprature remote update = ", this.Target_temp);
     this.Target_temp = value;
     this.update_req = 1;
     callback(null);
@@ -96,6 +98,7 @@ Thermostat_hr20.prototype = {
   },
 
   syncTargetTemp: function(callback){
+    this.log(this.name, "- MQTT : Sync Target Temprature with thermostat = ", this.Target_temp);
     this.client.publish(this.topic_TT, this.Target_temp.toString());
     this.update_req = 0;
     callback(null);
@@ -108,7 +111,7 @@ Thermostat_hr20.prototype = {
   },
 
   getBatteryStatus: function(callback) {
-    this.log(this.name, "- MQTT : Battery Status = ", this.BatteryStatus);
+    this.log(this.name, "getBattaryStatus : Battery Status = ", this.BatteryStatus);
     callback(null, this.BatteryStatus);
   }
 }
