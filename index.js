@@ -102,7 +102,7 @@ Thermostat_hr20.prototype = {
 
   syncTargetTemp: function(self){
     self.log(this.name, "- MQTT : Sync Target Temprature with thermostat = ", self.Target_temp);
-    self.client.publish(self.topic_TT, self.Target_temp.toString());
+    self.client.publish(self.topic_TT, self.Target_temp.toString(), {qos:1, retain:true});
     self.update_req = 0;
     // callback(null);
   },
