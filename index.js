@@ -40,7 +40,7 @@ function Thermostat_hr20(log, config) {
   this.temperatureDisplayUnits = Characteristic.TemperatureDisplayUnits.CELSIUS;
   var Current_temp;
   var Target_temp;
-  var BatteryStatus;
+  var BatteryStatus =0;
   var update_req = 0;
 
 
@@ -57,11 +57,11 @@ function Thermostat_hr20(log, config) {
   // that.Current_temp = parseFloat(data);
   if (topic === that.topic_CT){
     that.Current_temp = parseFloat(message);
-    that.log(this.name, "- MQTT : Current Temprature = ", this.Current_temp);
+    that.log(this.name, "- MQTT : Current Temprature = ", that.Current_temp);
   }
   if (topic === that.topic_BS){
     that.BatteryStatus = parseFloat(message);
-    that.log(this.name, "- MQTT : Battery Status = ", this.BatteryStatus);
+    that.log(this.name, "- MQTT : Battery Status = ", that.BatteryStatus);
   }
   if (topic === that.topic_TT_local){
     if (that.update_req === 0){
