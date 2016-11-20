@@ -69,9 +69,9 @@ function Thermostat_hr20(log, config) {
     that.log(this.name, "- MQTT : Local Tagert Temprature = ", that.Target_temp_local);
     if (that.update_req === 0){
       that.Target_temp = that.Target_temp_local;
-      that.setTargetTemperatureEvent();
+      that.setTargetTemperatureEvent.bind(that);
     }
-    that.syncTargetTemp();
+    that.syncTargetTemp.bind(that);
   }
   });
 }
@@ -94,17 +94,17 @@ Thermostat_hr20.prototype = {
     callback(null);
   },
 
-  setTargetTemperatureEvent: function() {
+  setTargetTemperatureEvent: function(callback) {
     this.log(this.name, "Target Temprature locally updated = ", this.Target_temp);
     this.thermostatService.setCharacteristic(Characteristic.TargetTemperature, this.Target_temp);
-    // callback(null);
+    callback(null);
   },
 
-  syncTargetTemp: function(){
+  syncTargetTemp: function(callback){
     this.log(this.name, "- MQTT : Sync Target Temprature with thermostat = ", this.Target_temp);
     this.client.publish(this.topic_TT, this.Target_temp.toString());
     this.update_req = 0;
-    // callback(null);
+    callback(null);
   },
 
   setTemperatureDisplayUnits: function(value, callback) {
