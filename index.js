@@ -64,6 +64,7 @@ function Thermostat_hr20(log, config) {
     that.log(this.name, "- MQTT : Battery Status = ", that.BatteryStatus);
   }
   if (topic === that.topic_TT_local){
+    that.log(this.name, "- MQTT : Local Tagert Temprature = ", that.Target_temp);
     if (that.update_req === 0){
       that.Target_temp = parseFloat(message);
       that.setTargetTemperatureEvent.bind(that);
@@ -85,14 +86,14 @@ Thermostat_hr20.prototype = {
   },
 
   setTargetTemperature: function(value, callback) {
-    this.log(this.name, "Target Temprature remote update = ", this.Target_temp);
     this.Target_temp = value;
     this.update_req = 1;
+    this.log(this.name, "Target Temprature remotely update = ", this.Target_temp);
     callback(null);
   },
 
   setTargetTemperatureEvent: function(callback) {
-    this.log(this.name, "- MQTT : Target Temprature locally updated = ", this.Target_temp);
+    this.log(this.name, "Target Temprature locally updated = ", this.Target_temp);
     this.thermostatService.setCharacteristic(Characteristic.TargetTemperature, this.Target_temp);
     callback(null);
   },
