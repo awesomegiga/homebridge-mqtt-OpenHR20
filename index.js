@@ -29,7 +29,7 @@ function Thermostat_hr20(log, config) {
     will: {
       topic: 'WillMsg',
       payload: 'Connection Closed abnormally..!',
-      qos: 0,
+      qos: 1,
       retain: false
       },
     username: config["username"],
