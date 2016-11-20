@@ -14,7 +14,7 @@ function Thermostat_hr20(log, config) {
   this.name = config["name"];
   this.url = config['url'];
   this.topic_CT = config['topic'] + '_CT';
-  this.topic_TT_local = config['topic'] + '_TT_local';
+  this.topic_TT_local = config['topic'] + '_local_TT';
   this.topic_TT = config['topic'] + '_TT';
   this.topic_BS = config['topic'] + '_BS';
   this.client_Id 		= 'mqttjs_' + Math.random().toString(16).substr(2, 8);7
