@@ -73,7 +73,7 @@ function Thermostat_hr20(log, config) {
     }
     that.syncTargetTemp(that);
   }
-  });
+}).bind(that);
 }
 
 Thermostat_hr20.prototype = {
